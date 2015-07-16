@@ -1,21 +1,21 @@
-var fs = require('fs');
-var waveform = require('../waveform-node.js');
-var request = require('request');
-var temp = require('temp');
+var fs = require('fs')
+	, waveform = require('../waveform-node')
+	, should = require('chai').should();
 
-temp.open({suffix: '.mp3'}, function(err, tempFile){
-	request('https://archive.org/download/testmp3testfile/mpthreetest.mp3')
-	.on('end', function(){
-		waveform.getWaveForm(tempFile.path, null, function(error, peaks){
+describe('#Draw mp3', function() {
+	it('download mp3 and should get waveform;', function(done) {
+		var options = {
+			numOfSample: 2000
+		};
+		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
 			if(error){
 				console.log(error);
 				return;
 			}
 
 			// Calculate
-			console.log(peaks); // Should be the desired
-		})
-	})
-	.pipe(fs.createWriteStream(tempFile.path))
+			peaks.length.should.equal(options.numOfSample);
+			done();
+		});
+	});
 });
-

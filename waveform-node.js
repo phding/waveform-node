@@ -1,8 +1,4 @@
-var pcm = require('pcm')
-	, ffprobe = require('node-ffprobe');
 var spawn = require('child_process').spawn;
-
-
 
 var log_10 = function(arg){
     return Math.log(arg) / Math.LN10;
@@ -111,7 +107,8 @@ var getPeak = function(numOfSample, samples, streamInfo){
 	var peaks = [];
 	var partialMax = 0;
 	var sampleIdx = 0;
-	var samplesPerPeak = Math.round(streamInfo.duration * streamInfo.sampleRate / numOfSample) * streamInfo.channels
+	//var samplesPerPeak = Math.round(streamInfo.duration * streamInfo.sampleRate / numOfSample) * streamInfo.channels
+	var samplesPerPeak = Math.ceil(samples.length / numOfSample);
 
 	for(var idx in samples){
 		var value = Math.abs(samples[idx]);
@@ -128,6 +125,10 @@ var getPeak = function(numOfSample, samples, streamInfo){
 			sampleIdx = 0;
 			partialMax = 0;
 		}
+	}
+
+	while(peaks.length < numOfSample){
+		peaks.push(currMax);
 	}
 
 	return peaks;

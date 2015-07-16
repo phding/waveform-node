@@ -1,0 +1,35 @@
+{
+  "name": "waveform-node",
+  "version": "0.0.1",
+  "description": "Aduo Waveform Generator in javascript.",
+  "main": "waveform-node.js",
+  "homepage": "https://github.com/phding/waveform-node",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bbcrd/waveform-data.js.git"
+  },
+  "keywords": [
+    "audio",
+    "waveform",
+    "nodejs",
+    "visualisation"
+  ],
+  "author": "Philip Ding <gjding.philip at gmail.com>",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/phding/waveform-node/issues"
+  },
+  "testling": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+    "temp": "~0.8.3",
+    "request": "~2.58.0"
+  }
+}

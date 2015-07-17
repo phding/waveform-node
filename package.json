@@ -1,6 +1,6 @@
 {
   "name": "waveform-node",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Aduo Waveform Generator in javascript.",
   "main": "waveform-node.js",
   "homepage": "https://github.com/phding/waveform-node",
@@ -21,7 +21,10 @@
     "visualisation"
   ],
   "author": "Philip Ding <gjding.philip at gmail.com>",
-  "license": "Apache 2.0",
+  "licenses": [{
+    "type": "Apache-2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0"
+  }],
   "bugs": {
     "url": "https://github.com/phding/waveform-node/issues"
   },

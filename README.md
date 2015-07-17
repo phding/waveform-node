@@ -36,5 +36,7 @@ Default: ``` Stack ```
 Choose type of return value
 
 - Stack will be series of peak by picking highest absolute value in given window(sampling rate)
+  ![Alt text](/doc/stack.png "Stack")
 - Line will be series of value by the sampling rate
+  ![Alt text](/doc/line.png "Line")
 

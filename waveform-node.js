@@ -18,7 +18,7 @@ var alt_log_meter = function(power){
 	return log_meter(power, -192.0, 0.0, 8.0);
 }
 
-var waveFormTypeEnum = {
+var waveformTypeEnum = {
 	STACK: 0,
 	LINE: 1
 }
@@ -106,21 +106,39 @@ var getDataFromFFMpeg = function(filepath, options, callback){
 	});
 }
 
+
+var getPeakBySamplesPerSecond = function(waveformType, samplesPerSecond, samples, streamInfo){
+	var desiredSamplePerSecond = Math.ceil(samples.length / streamInfo.duration);
+	if(desiredSamplePerSecond > samplesPerSecond){
+		desiredSamplePerSecond = samplesPerSecond;
+	}
+
+	var samplesPerPeak = Math.ceil(samples.length / (desiredSamplePerSecond * streamInfo.duration))
+	return getPeak(waveformType, samplesPerPeak, samples, streamInfo);
+}
+
+var getPeakByNumberOfSamples = function(waveformType, numOfSample, samples, streamInfo){
+	var samplesPerPeak = Math.ceil(samples.length / numOfSample);
+	var peaks =  getPeak(waveformType, samplesPerPeak, samples, streamInfo);
+
+	while(peaks.length < numOfSample){
+		peaks.push(peaks[0]);
+	}
+	return peaks;
+}
 // get peak by desired number of sample
-var getPeak = function(waveFormType, numOfSample, samples, streamInfo){
+var getPeak = function(waveformType, samplesPerPeak, samples, streamInfo){
 	// Calculate sample
 	var peaks = [];
 	var currMax = 0;
-	//var samplesPerPeak = Math.round(streamInfo.duration * streamInfo.sampleRate / numOfSample) * streamInfo.channels
-	var samplesPerPeak = Math.ceil(samples.length / numOfSample);
 
-	if(waveFormType == waveFormTypeEnum.LINE){
+	if(waveformType == waveformTypeEnum.LINE){
 		currMax = samples[0];
 		for(var i=0; i<samples.length; i+= samplesPerPeak){
 			var value = samples[i];
 			peaks.push(value);
 		}
-	}else if(waveFormType == waveFormTypeEnum.STACK){
+	}else if(waveformType == waveformTypeEnum.STACK){
 
 		var partialMax = 0;
 		var sampleIdx = 0;
@@ -142,12 +160,9 @@ var getPeak = function(waveFormType, numOfSample, samples, streamInfo){
 			}
 		}
 	}else{
-		throw new Error("Unsupported wave form type: " + waveFormType);
+		throw new Error("Unsupported wave form type: " + waveformType);
 	}
 
-	while(peaks.length < numOfSample){
-		peaks.push(currMax);
-	}
 
 	return peaks;
 }
@@ -159,27 +174,37 @@ exports.getWaveForm = function(filepath, options, callback){
 	options = options || {};
 
 	var numOfSample = 1000;
-	var waveFormType = waveFormTypeEnum.Stack;
+	var waveformType = waveformTypeEnum.STACK;
+	var samplesPerSecond = undefined;
 	if(typeof options.numOfSample !== 'undefined'){
 		numOfSample = options.numOfSample;
 	}
 
-	if(typeof options.waveFormType !== 'undefined'){
-		waveFormType = options.waveFormType;
+	if(typeof options.waveformType !== 'undefined'){
+		waveformType = options.waveformType;
 	}
 
+	if(typeof options.samplesPerSecond !== 'undefined'){
+		samplesPerSecond = options.samplesPerSecond;
+	}
 
 	if(numOfSample < 1){
 		throw new Error("Number of sample should larget than 1");
 	}
+
 	getDataFromFFMpeg(filepath, options, function(error, samples, streamInfo){
 		if(error){
 			callback(error);
 			return;
 		}
+		var peaks = [];
 
 		try{
-			var peaks = getPeak(waveFormType, numOfSample, samples, streamInfo);
+			if(typeof samplesPerSecond == 'undefined'){
+				peaks = getPeakByNumberOfSamples(waveformType, numOfSample, samples, streamInfo);
+			}else{
+				peaks = getPeakBySamplesPerSecond(waveformType, samplesPerSecond, samples, streamInfo);
+			}
 
 		}catch(error){
 			callback(error);
@@ -189,4 +214,4 @@ exports.getWaveForm = function(filepath, options, callback){
 	});
 }
 
-exports.waveFormType = waveFormTypeEnum;
+exports.waveformType = waveformTypeEnum;

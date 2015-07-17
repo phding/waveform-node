@@ -3,10 +3,27 @@ var fs = require('fs')
 	, should = require('chai').should();
 
 describe('#Draw mp3', function() {
+	it('download mp3 and should get waveform with default value', function(done) {
+		var options = {
+			numOfSample: 2000,
+			waveformType: waveform.waveformType.LINE
+		};
+
+		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
+			if(error){
+				console.log(error);
+				return;
+			}
+
+			// Calculate
+			peaks.length.should.not.equal(0);
+			done();
+		});
+	});
 	it('download mp3 and should get waveform in line form', function(done) {
 		var options = {
 			numOfSample: 2000,
-			waveFormType: waveform.waveFormType.LINE
+			waveformType: waveform.waveformType.LINE
 		};
 
 		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
@@ -21,10 +38,29 @@ describe('#Draw mp3', function() {
 		});
 	});
 
+	it('download mp3 and should get waveform by samples per second', function(done){
+		var options = {
+			samplesPerSecond: 20,
+			waveformType: waveform.waveformType.STACK
+		}
+
+		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
+			if(error){
+				console.log(error);
+				return;
+			}
+
+			// The mp3 is roughly 12s
+			peaks.length.should.equal(options.samplesPerSecond * 12);
+			done();
+		});
+
+	});
+
 	it('download mp3 and should get waveform in stack form', function(done) {
 		var options = {
 			numOfSample: 2000,
-			waveFormType: waveform.waveFormType.STACK
+			waveformType: waveform.waveformType.STACK
 		};
 
 		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
@@ -43,7 +79,7 @@ describe('#Draw mp3', function() {
 	it('wrong form type should get error', function(done) {
 		var options = {
 			numOfSample: 2000,
-			waveFormType: 1000
+			waveformType: 1000
 		};
 
 		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){

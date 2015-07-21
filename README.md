@@ -3,7 +3,6 @@
 ## Usage
 
 ```
-var fs = require('fs');
 var waveform = require('../waveform-node');
 
 var options = {};
@@ -19,6 +18,13 @@ waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, 
 
 
 ## Options
+
+### samplesPerSecond
+Type: ```Integer ```
+
+Default: ``` undefined ```
+
+Samples per second. This parameter is conflict with numOfSample, if this attribute was set, the numOfSample will be ignored.
 
 ### numOfSample
 Type: ```Integer ```

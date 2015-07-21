@@ -1,5 +1,9 @@
 # waveform-node
 
+# Prerequisite
+
+You need to have ffmpeg installed, and add the path to environment variable.
+
 ## Usage
 
 ```

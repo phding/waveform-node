@@ -7,7 +7,7 @@ You need to have ffmpeg installed, and add the path to environment variable.
 ## Usage
 
 ```
-var waveform = require('../waveform-node');
+var waveform = require('waveform-node');
 
 var options = {};
 waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){

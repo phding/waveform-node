@@ -126,6 +126,7 @@ var getPeakByNumberOfSamples = function(waveformType, numOfSample, samples, stre
 	}
 	return peaks;
 }
+
 // get peak by desired number of sample
 var getPeak = function(waveformType, samplesPerPeak, samples, streamInfo){
 	// Calculate sample
@@ -143,7 +144,7 @@ var getPeak = function(waveformType, samplesPerPeak, samples, streamInfo){
 		var partialMax = 0;
 		var sampleIdx = 0;
 
-		for(var idx in samples){
+		for(var idx = 0; idx < samples.length; idx++){
 			var value = Math.abs(samples[idx]);
 			sampleIdx++;
 
@@ -163,10 +164,19 @@ var getPeak = function(waveformType, samplesPerPeak, samples, streamInfo){
 		throw new Error("Unsupported wave form type: " + waveformType);
 	}
 
+	peaks.toPrecision = toPrecision;
 
 	return peaks;
 }
 
+var toPrecision = function(precision){
+	var list = [];
+	for(var i=0; i<this.length;i++){
+		list.push(this[i].toPrecision(precision));
+	}
+
+	return list;
+}
 
 // Extract wave form from a file
 exports.getWaveForm = function(filepath, options, callback){
@@ -209,6 +219,7 @@ exports.getWaveForm = function(filepath, options, callback){
 		}catch(error){
 			callback(error);
 		}
+		
 		// Parse
 		callback(null, peaks);
 	});

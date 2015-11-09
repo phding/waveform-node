@@ -37,7 +37,7 @@ Default: ``` 2000 ```
 
 Number of data point for return value, sampling across entire waveform
 
-### waveFormType
+### waveformType
 Type: ```Enum ```
 
 Default: ``` Stack ```

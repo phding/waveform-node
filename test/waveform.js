@@ -75,7 +75,6 @@ describe('#Draw mp3', function() {
 		});
 	});
 
-
 	it('wrong form type should get error', function(done) {
 		var options = {
 			numOfSample: 2000,
@@ -87,4 +86,26 @@ describe('#Draw mp3', function() {
 			done();
 		});
 	});
+
+	it('Check precision', function(done){
+		var options = {
+			samplesPerSecond: 20,
+			waveformType: waveform.waveformType.STACK
+		};
+
+		waveform.getWaveForm( __dirname + './mpthreetest.mp3', options, function(error, peaks){
+
+			var precision = 3;
+			var list = peaks.toPrecision(precision);
+			var ret = true;
+			for(var i=0;i<list.length;i++){
+				var target = list[i].replace(/0\.0*/, '');
+				ret = target.length == precision? true: false;
+				if(!ret){
+					target.length.should.equal(precision);
+				}
+			}
+			done();
+		});
+	})
 });

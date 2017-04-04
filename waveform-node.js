@@ -35,7 +35,7 @@ var getDataFromFFMpeg = function(filepath, options, callback){
 
         // Allow for the ffmpeg path to be specified via options
         try {
-                if (typeof(options.ffmpegPath !== 'undefined') && options.ffmpegPath != null) {
+                if (typeof(options.ffmpegPath) !== 'undefined' && options.ffmpegPath != null) {
                   ffmpegPath = options.ffmpegPath;
                 }
         } catch (ex) {

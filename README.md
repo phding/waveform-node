@@ -42,11 +42,18 @@ Type: ```Enum ```
 
 Default: ``` Stack ```
 
-
 Choose type of return value
 
 - Stack will be series of peak by picking highest absolute value in given window(sampling rate)
   ![Alt text](/doc/stack.png "Stack")
 - Line will be series of value by the sampling rate
   ![Alt text](/doc/line.png "Line")
+
+### ffmpegPath
+Type: ```String ```
+
+Default: ``` ffmpeg ```
+
+Location of the 'ffmpeg' binary.  Check out the 'ffmpeg-static' package for static binaries.
+
 

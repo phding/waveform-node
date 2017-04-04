@@ -31,10 +31,20 @@ var getDataFromFFMpeg = function(filepath, options, callback){
 	var gotData = false;
 	var samples = [];
 	var channel = 0;
-  
-	// Extract signed 16-bit little endian PCM data with ffmpeg and pipe to
-	// stdout
-	var ffmpeg = spawn('ffmpeg', ['-i',filepath,'-f','s16le', '-acodec','pcm_s16le','-y','pipe:1']);
+        var ffmpegPath = '';
+
+        // Allow for the ffmpeg path to be specified via options
+        try {
+                if (typeof(options.ffmpegPath) !== 'undefined' && options.ffmpegPath != null) {
+                  ffmpegPath = options.ffmpegPath;
+                }
+        } catch (ex) {
+          ffmpegPath = 'ffmpeg';
+        }
+
+        // Extract signed 16-bit little endian PCM data with ffmpeg and pipe to
+        // stdout
+        var ffmpeg = spawn(ffmpegPath, ['-i',filepath,'-f','s16le', '-acodec','pcm_s16le','-y','pipe:1']);
 	ffmpeg.stdout.on('data', function(data){
 		gotData = true;
 		var value;

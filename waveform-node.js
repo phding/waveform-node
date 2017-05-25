@@ -77,7 +77,7 @@ var getDataFromFFMpeg = function(filepath, options, callback){
 		if (gotData){
 			// Try parse duration and bitrate
 			var pattern = new RegExp(/Duration: ([0-9:.]*),( start: [0-9:.]*,)? bitrate: ([0-9]*) kb/);
-			var pattern2 = new RegExp(/Stream #[0-9:]* Audio: [^,]*, ([0-9]*) Hz, ([a-z]*),/);
+			var pattern2 = new RegExp(/Stream #[0-9:^(eng)]* Audio: [^,]*, ([0-9]*) Hz, ([a-z]*),/);
 
 
 			var matches = outputStr.match(pattern);

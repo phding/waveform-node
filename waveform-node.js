@@ -91,6 +91,8 @@ var getDataFromFFMpeg = function(filepath, options, callback){
 				duration *= 60;
 				duration += val;
 			}
+			duration = duration + (parseInt(strList[3]) / 100);
+
 
 			var channels = matches2[2];
 

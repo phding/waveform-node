@@ -195,7 +195,7 @@ var toPrecision = function(precision){
  * @param {number} options.numOfSample - The number of samples to use for generating the waveform. Default is 1000.
  * @param {string} options.waveformType - The type of waveform to generate. Default is 'STACK'.
  * @param {number} options.samplesPerSecond - The number of samples per second to use for generating the waveform.
- * @param {function(Erorr,number[])} callback - The callback function to invoke when the waveform data is retrieved.
+ * @param {function(Error,number[])} callback - The callback function to invoke when the waveform data is retrieved.
  */
 exports.getWaveForm = function(filepath, options, callback){
 

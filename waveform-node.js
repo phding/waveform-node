@@ -193,7 +193,7 @@ var toPrecision = function(precision){
  * @param {string} filepath - The path to the audio file.
  * @param {Object} options - The options for retrieving the waveform data.
  * @param {number} options.numOfSample - The number of samples to use for generating the waveform. Default is 1000.
- * @param {string} options.waveformType - The type of waveform to generate. Default is 'STACK'.
+ * @param {number} options.waveformType - The type of waveform to generate. Default is 'STACK'.
  * @param {number} options.samplesPerSecond - The number of samples per second to use for generating the waveform.
  * @param {function(Error,number[])} callback - The callback function to invoke when the waveform data is retrieved.
  */

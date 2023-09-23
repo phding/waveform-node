@@ -1,8 +1,8 @@
 export function getWaveForm(filepath: string, options: {
   numOfSample: number;
-  waveformType: string;
+  waveformType: number;
   samplesPerSecond: number;
-}, callback: (arg0: Error, arg1: number[]) => any): void;
+}, callback: (error: Error, peaks: number[]) => any): void;
 export { waveformTypeEnum as waveformType };
 declare namespace waveformTypeEnum {
   const STACK: number;
